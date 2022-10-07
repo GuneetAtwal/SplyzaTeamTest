@@ -139,18 +139,18 @@ class InviteFragment: Fragment() {
     }
 
     private fun showPermissionsDialog() {
+        val dialogBinding = DialogPermissionsLevelsBinding.inflate(
+            LayoutInflater.from(binding.root.context)
+        )
+
         val dialog = Dialog(requireActivity(), R.style.Theme_Dialog).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setCancelable(true)
-            setContentView(R.layout.dialog_permissions_levels)
+            setContentView(dialogBinding.root)
             window?.apply {
                 setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             }
         }
-
-        val dialogBinding = DialogPermissionsLevelsBinding.inflate(
-            LayoutInflater.from(binding.root.context)
-        )
 
         dialogBinding.tvCoach.setOnClickListener {
             binding.tvCurrentPermLevel.text = getString(R.string.coach)
@@ -177,7 +177,8 @@ class InviteFragment: Fragment() {
         }
 
         dialogBinding.apply {
-            if (viewModel.isTeamFull) { //Team full
+            /** Team is full **/
+            if (viewModel.isTeamFull) {
                 tvCoach.isEnabled = false
                 tvPlayer.isEnabled = false
                 tvPlayerCoach.isEnabled = false
@@ -192,10 +193,12 @@ class InviteFragment: Fragment() {
                 tvPlayerCoach.setTextColor(root.context.getColorFromRes(R.color.azure_blue))
             }
 
-            if (viewModel.supportersLimit == 0) { // use-case #2 i.e., no supporters
+            /** no supporters **/
+            if (viewModel.supportersLimit == 0) {
                 tvSupporter.setVisibility(false)
             } else {
-                if (viewModel.supporters > 0 && viewModel.supporters == viewModel.supportersLimit) { // use-case #3 i.e., no open slots for supporters
+                /** No slots left **/
+                if (viewModel.supporters > 0 && viewModel.supporters == viewModel.supportersLimit) {
                     tvSupporter.isEnabled = false
                     tvSupporter.setTextColor(root.context.getColorFromRes(R.color.light_gray))
                 } else {
