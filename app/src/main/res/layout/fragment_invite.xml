@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:padding="@dimen/dimen_24">
+
+    <TextView
+        android:id="@+id/tvCurrentMembers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:text="@string/current_members"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCurrentMembersNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_8"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_14"
+        tools:text="56"
+        app:layout_constraintBottom_toBottomOf="@id/tvCurrentMembers"
+        app:layout_constraintStart_toEndOf="@id/tvCurrentMembers"
+        app:layout_constraintTop_toTopOf="@id/tvCurrentMembers" />
+
+    <TextView
+        android:id="@+id/tvMembersLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_8"
+        android:text="@string/limit"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toStartOf="@id/tvMembersLimitNum"
+        app:layout_constraintTop_toTopOf="@id/tvCurrentMembers" />
+
+
+    <TextView
+        android:id="@+id/tvMembersLimitNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_14"
+        tools:text="56"
+        app:layout_constraintBottom_toBottomOf="@id/tvMembersLimit"
+        app:layout_constraintEnd_toEndOf="@id/rlPermLevels"
+        app:layout_constraintTop_toTopOf="@id/tvMembersLimit" />
+
+    <TextView
+        android:id="@+id/tvCurrentSupporters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_18"
+        android:text="@string/current_supporters"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintStart_toStartOf="@id/tvCurrentMembers"
+        app:layout_constraintTop_toBottomOf="@id/tvCurrentMembers" />
+
+    <TextView
+        android:id="@+id/tvCurrentSupportersNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_8"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintBottom_toBottomOf="@id/tvCurrentSupporters"
+        app:layout_constraintStart_toEndOf="@id/tvCurrentSupporters"
+        app:layout_constraintTop_toTopOf="@id/tvCurrentSupporters" />
+
+    <TextView
+        android:id="@+id/tvSupportersLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_8"
+        android:text="@string/limit"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toStartOf="@id/tvSupportersLimitNum"
+        app:layout_constraintTop_toTopOf="@id/tvCurrentSupportersNum" />
+
+
+    <TextView
+        android:id="@+id/tvSupportersLimitNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintBottom_toBottomOf="@id/tvSupportersLimit"
+        app:layout_constraintEnd_toEndOf="@id/rlPermLevels"
+        app:layout_constraintTop_toTopOf="@id/tvSupportersLimit" />
+
+    <TextView
+        android:id="@+id/tvInvitePermissions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="@string/invite_permissions"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintStart_toStartOf="@id/tvCurrentMembers"
+        app:layout_constraintTop_toBottomOf="@id/tvCurrentSupporters" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_supporters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tvCurrentSupporters, tvCurrentSupportersNum,
+         tvSupportersLimit, tvSupportersLimitNum" />
+
+    <RelativeLayout
+        android:id="@+id/rlPermLevels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvInvitePermissions"
+        android:background="@drawable/custom_border"
+        android:layout_marginVertical="@dimen/dimen_8"
+        android:layout_marginHorizontal="@dimen/dimen_16"
+        android:padding="@dimen/dimen_8">
+        <TextView
+            android:id="@+id/tvCurrentPermLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            tools:text="Coach"/>
+
+        <ImageView
+            android:id="@+id/ivExpandPerms"
+            android:layout_width="@dimen/dimen_24"
+            android:layout_height="@dimen/dimen_24"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_expand_48px"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvInviteUrlDesc"
+        android:layout_width="@dimen/dimen_0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:gravity="center"
+        android:text="@string/invite_url_desc"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintEnd_toEndOf="@id/rlPermLevels"
+        app:layout_constraintStart_toStartOf="@id/rlPermLevels"
+        app:layout_constraintTop_toBottomOf="@id/rlPermLevels" />
+
+    <TextView
+        android:id="@+id/tvWhatArePermissions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:gravity="center"
+        android:text="@string/what_are_permissions"
+        android:textSize="@dimen/font_16"
+        app:layout_constraintEnd_toEndOf="@id/tvInviteUrlDesc"
+        app:layout_constraintStart_toStartOf="@id/tvInviteUrlDesc"
+        app:layout_constraintTop_toBottomOf="@id/tvInviteUrlDesc" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnShareQr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/black"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/share_qr_code"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_18"
+        app:layout_constraintEnd_toEndOf="@id/tvWhatArePermissions"
+        app:layout_constraintStart_toStartOf="@id/tvWhatArePermissions"
+        app:layout_constraintTop_toBottomOf="@id/tvWhatArePermissions" />
+
+    <Button
+        android:id="@+id/btnCopyLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:backgroundTint="@color/black"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/copy_link"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_18"
+        app:layout_constraintEnd_toEndOf="@id/btnShareQr"
+        app:layout_constraintStart_toStartOf="@id/btnShareQr"
+        app:layout_constraintTop_toBottomOf="@id/btnShareQr" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

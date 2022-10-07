@@ -27,7 +27,7 @@ class HomeFragment: Fragment() {
 
         if (::binding.isInitialized) {
             setOnClickListeners()
-            setupUI()
+            setupHeader()
         }
     }
 
@@ -37,7 +37,7 @@ class HomeFragment: Fragment() {
         }
     }
 
-    private fun setupUI() {
+    private fun setupHeader() {
         if (activity is HomeActivity) {
             (activity as HomeActivity).supportActionBar?.apply {
                 customView.apply {
