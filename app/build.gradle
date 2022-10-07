@@ -18,6 +18,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    android {
+        buildFeatures {
+            viewBinding true
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -46,6 +52,9 @@ dependencies {
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+
+    //Moshi
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
     //Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
