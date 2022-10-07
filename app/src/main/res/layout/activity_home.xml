@@ -6,32 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".view.home.HomeActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:layout_gravity="top"
-        app:contentInsetStart="@dimen/dimen_0"
-        app:layout_collapseMode="pin"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            layout="@layout/custom_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </androidx.appcompat.widget.Toolbar>
-
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/container"
+        android:id="@+id/fragmentContainer"
         android:layout_width="@dimen/dimen_0"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/dimen_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

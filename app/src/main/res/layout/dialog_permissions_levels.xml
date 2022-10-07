@@ -6,10 +6,10 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/llPerms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:layout_marginHorizontal="@dimen/dimen_24"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -20,41 +20,41 @@
                 android:id="@+id/tvCoach"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_24"
                 android:layout_gravity="center"
                 android:textColor="@color/azure_blue"
                 android:text="@string/coach"
-                android:textSize="@dimen/font_14"/>
+                android:textSize="@dimen/font_16"/>
 
             <TextView
                 android:id="@+id/tvPlayerCoach"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_24"
                 android:layout_gravity="center"
                 android:textColor="@color/azure_blue"
                 android:text="@string/player_coach"
-                android:textSize="@dimen/font_14"/>
+                android:textSize="@dimen/font_16"/>
 
             <TextView
                 android:id="@+id/tvPlayer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/dimen_16"
+                android:layout_marginVertical="@dimen/dimen_24"
                 android:layout_gravity="center"
                 android:textColor="@color/azure_blue"
                 android:text="@string/player"
-                android:textSize="@dimen/font_14"/>
+                android:textSize="@dimen/font_16"/>
 
             <TextView
                 android:id="@+id/tvSupporter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_16"
+                android:layout_marginBottom="@dimen/dimen_24"
                 android:layout_gravity="center"
                 android:textColor="@color/azure_blue"
                 android:text="@string/supporter"
-                android:textSize="@dimen/font_14"/>
+                android:textSize="@dimen/font_16"/>
 
         </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

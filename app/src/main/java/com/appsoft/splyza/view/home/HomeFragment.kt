@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.appsoft.splyza.R
+import com.appsoft.splyza.base.extensions.changeFragment
 import com.appsoft.splyza.base.extensions.setVisibility
 import com.appsoft.splyza.databinding.FragmentHomeBinding
+import com.appsoft.splyza.view.invite.InviteFragment
 
 class HomeFragment: Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -33,18 +35,23 @@ class HomeFragment: Fragment() {
 
     private fun setOnClickListeners() {
         binding.btnInvite.setOnClickListener {
-            //Go To Invitation View
+            activity?.changeFragment(
+                containerViewId = R.id.fragmentContainer,
+                newFragment = InviteFragment.newInstance(),
+                replaceFragment = false,
+                addToBackStack = true
+            )
         }
     }
 
     private fun setupHeader() {
-        if (activity is HomeActivity) {
-            (activity as HomeActivity).supportActionBar?.apply {
-                customView.apply {
-                    findViewById<TextView>(R.id.tvBack).setVisibility(false)
-                    findViewById<TextView>(R.id.tvTitle).text = getString(R.string.invite_now)
-                }
-            }
+        binding.customToolbar.apply {
+            tvBack.setVisibility(false)
+            tvTitle.text = getString(R.string.invite_now)
         }
+    }
+
+    companion object {
+        fun newInstance() = HomeFragment()
     }
 }

@@ -104,16 +104,11 @@ class InviteFragment: Fragment() {
     }
 
     private fun setupHeader() {
-        if (activity is HomeActivity) {
-            (activity as HomeActivity).supportActionBar?.apply {
-                customView.apply {
-                    findViewById<TextView>(R.id.tvBack).setVisibility(true)
-                    findViewById<TextView>(R.id.tvTitle).text = getString(R.string.invite_members)
-                    findViewById<TextView>(R.id.tvBack).setOnClickListener {
-                        it.setVisibility(false)
-                    }
-                }
+        binding.customToolbar.apply {
+            tvBack.setOnClickListener {
+                activity?.onBackPressed()
             }
+            tvTitle.text = getString(R.string.invite_members)
         }
     }
 
