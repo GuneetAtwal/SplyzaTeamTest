@@ -75,5 +75,7 @@ dependencies {
     //Ktx
     implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
 
+    //QRCode
+    implementation "com.google.zxing:core:$qrcode"
 
 }

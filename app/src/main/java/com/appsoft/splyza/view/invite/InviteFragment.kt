@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.appsoft.splyza.BuildConfig
 import com.appsoft.splyza.R
+import com.appsoft.splyza.base.extensions.changeFragment
 import com.appsoft.splyza.base.extensions.getColorFromRes
 import com.appsoft.splyza.base.extensions.setVisibility
 import com.appsoft.splyza.data.model.TeamResponse
@@ -24,6 +25,7 @@ import com.appsoft.splyza.data.network.ResourceState
 import com.appsoft.splyza.databinding.DialogPermissionsLevelsBinding
 import com.appsoft.splyza.databinding.FragmentInviteBinding
 import com.appsoft.splyza.view.home.HomeActivity
+import com.appsoft.splyza.view.qr.QrFragment
 import com.appsoft.splyza.viewmodel.HomeViewModel
 
 class InviteFragment: Fragment() {
@@ -94,7 +96,12 @@ class InviteFragment: Fragment() {
             }
 
             btnShareQr.setOnClickListener {
-                //Go to QrFragment
+                activity?.changeFragment(
+                    containerViewId = R.id.fragmentContainer,
+                    newFragment = QrFragment.newInstance(),
+                    replaceFragment = false,
+                    addToBackStack = true
+                )
             }
 
             rlPermLevels.setOnClickListener {

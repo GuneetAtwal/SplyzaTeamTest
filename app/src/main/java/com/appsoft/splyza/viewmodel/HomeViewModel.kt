@@ -18,7 +18,7 @@ class HomeViewModel @Inject constructor(
     private val teamRepo: TeamRepository
 ) : ViewModel() {
 
-    var inviteUrl = ""
+    var inviteUrl: String? = ""
     var teamId = ""
     var isTeamFull = false
     var supporters = 0
