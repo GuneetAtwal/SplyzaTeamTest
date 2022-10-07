@@ -7,30 +7,28 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.appsoft.splyza.BuildConfig
+import androidx.lifecycle.ViewModelProvider
 import com.appsoft.splyza.R
-import com.appsoft.splyza.base.extensions.changeFragment
-import com.appsoft.splyza.base.extensions.getColorFromRes
-import com.appsoft.splyza.base.extensions.setVisibility
+import com.appsoft.splyza.base.extensions.*
 import com.appsoft.splyza.data.model.TeamResponse
 import com.appsoft.splyza.data.network.ResourceState
 import com.appsoft.splyza.databinding.DialogPermissionsLevelsBinding
 import com.appsoft.splyza.databinding.FragmentInviteBinding
-import com.appsoft.splyza.view.home.HomeActivity
 import com.appsoft.splyza.view.qr.QrFragment
 import com.appsoft.splyza.viewmodel.HomeViewModel
+import com.appsoft.splyza.viewmodel.InviteViewModel
 
 class InviteFragment: Fragment() {
+
+    private val homeViewModel: HomeViewModel by activityViewModels()
     private lateinit var binding: FragmentInviteBinding
-    private val viewModel: HomeViewModel by activityViewModels()
+    private lateinit var viewModel: InviteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +36,7 @@ class InviteFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentInviteBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this).get(InviteViewModel::class.java)
         return binding.root
     }
 
@@ -52,18 +51,18 @@ class InviteFragment: Fragment() {
     }
 
     private fun getInitData() {
-        viewModel.getTeam(viewModel.teamId)
+        homeViewModel.getTeam(homeViewModel.teamId)
+        homeViewModel.updateRole(homeViewModel.teamId, binding.tvCurrentPermission.text.toString())
     }
 
     private fun observeData() {
-        viewModel.teamLiveData.observe(viewLifecycleOwner) {
+        homeViewModel.teamLiveData.observe(viewLifecycleOwner) {
             when(it) {
                 is ResourceState.Success -> {
                     it.body.let { team ->
-                        val members = team.members.total - team.members.supporters
-                        if (members == team.plan.memberLimit) {
-                            viewModel.isTeamFull = true
-                        }
+
+                        viewModel.members = team.members.total - team.members.supporters
+                        viewModel.membersLimit = team.plan.memberLimit
                         viewModel.supporters = team.members.supporters
                         viewModel.supportersLimit = team.plan.supporterLimit
                     }
@@ -76,10 +75,10 @@ class InviteFragment: Fragment() {
             }
         }
 
-        viewModel.inviteUrlLiveData.observe(viewLifecycleOwner) {
+        homeViewModel.inviteUrlLiveData.observe(viewLifecycleOwner) {
             when(it) {
                 is ResourceState.Success -> {
-                    viewModel.inviteUrl = it.body.inviteUrl
+                    homeViewModel.inviteUrl = it.body.inviteUrl
                 }
 
                 is ResourceState.Failure -> {
@@ -121,10 +120,8 @@ class InviteFragment: Fragment() {
 
     private fun setupUI(team: TeamResponse) {
         binding.apply {
-            if (team.plan.supporterLimit < 1) {
-                binding.groupSupporters.visibility = View.GONE
-            }
-            tvCurrentMembersNum.text = team.members.total.toString()
+            binding.groupSupporters.setVisibility(team.plan.supporterLimit > 0)
+            tvCurrentMembersNum.text = (team.members.total - team.members.supporters).toString()
             tvCurrentSupportersNum.text = team.members.supporters.toString()
             tvMembersLimitNum.text = team.plan.memberLimit.toString()
             tvSupportersLimitNum.text = team.plan.supporterLimit.toString()
@@ -133,11 +130,12 @@ class InviteFragment: Fragment() {
 
     private fun copyLinkToClipBoard() {
         val clipboardManager = activity?.applicationContext?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clipData = ClipData.newPlainText("Splyza_Team_Invite_Link", viewModel.inviteUrl)
+        val clipData = ClipData.newPlainText(
+            COPY_LABEL,
+            homeViewModel.inviteUrl ?: ""
+        )
         clipboardManager.setPrimaryClip(clipData)
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG,"Copied Text: ${clipboardManager.primaryClip?.getItemAt(0)?.text}")
-        }
+        activity?.showShortToast(getString(R.string.copied))
     }
 
     private fun showPermissionsDialog() {
@@ -154,36 +152,45 @@ class InviteFragment: Fragment() {
             }
         }
 
-        dialogBinding.tvCoach.setOnClickListener {
-            binding.tvCurrentPermLevel.text = getString(R.string.coach)
-            viewModel.updateRole(viewModel.teamId, binding.tvCurrentPermLevel.text.toString())
-            dialog.dismiss()
+        binding.apply {
+            dialogBinding.tvCoach.setOnClickListener {
+                tvCurrentPermission.text = getString(R.string.coach)
+                homeViewModel.updateRole(homeViewModel.teamId, tvCurrentPermission.text.toString())
+                dialog.dismiss()
+            }
+
+            dialogBinding.tvPlayerCoach.setOnClickListener {
+                tvCurrentPermission.text = getString(R.string.player_coach)
+                homeViewModel.updateRole(homeViewModel.teamId, tvCurrentPermission.text.toString())
+                dialog.dismiss()
+            }
+
+            dialogBinding.tvPlayer.setOnClickListener {
+                tvCurrentPermission.text = getString(R.string.player)
+                homeViewModel.updateRole(homeViewModel.teamId, tvCurrentPermission.text.toString())
+                dialog.dismiss()
+            }
+
+            dialogBinding.tvSupporter.setOnClickListener {
+                tvCurrentPermission.text = getString(R.string.supporter)
+                homeViewModel.updateRole(homeViewModel.teamId, tvCurrentPermission.text.toString())
+                dialog.dismiss()
+            }
         }
 
-        dialogBinding.tvPlayerCoach.setOnClickListener {
-            binding.tvCurrentPermLevel.text = getString(R.string.player)
-            viewModel.updateRole(viewModel.teamId, binding.tvCurrentPermLevel.text.toString())
-            dialog.dismiss()
-        }
 
-        dialogBinding.tvPlayer.setOnClickListener {
-            binding.tvCurrentPermLevel.text = getString(R.string.player)
-            viewModel.updateRole(viewModel.teamId, binding.tvCurrentPermLevel.text.toString())
-            dialog.dismiss()
-        }
-
-        dialogBinding.tvSupporter.setOnClickListener {
-            binding.tvCurrentPermLevel.text = getString(R.string.supporter)
-            viewModel.updateRole(viewModel.teamId, binding.tvCurrentPermLevel.text.toString())
-            dialog.dismiss()
-        }
 
         dialogBinding.apply {
-            /** Team is full **/
-            if (viewModel.isTeamFull) {
+            /**
+             * If there are no available member slots (the team is full),
+             * the Coach, Player Coach, and
+             * Player options should be disabled.
+             * **/
+            if (viewModel.members == viewModel.membersLimit) {
                 tvCoach.isEnabled = false
                 tvPlayer.isEnabled = false
                 tvPlayerCoach.isEnabled = false
+                tvCoach.setTextColor(root.context.getColorFromRes(R.color.light_gray))
                 tvPlayer.setTextColor(root.context.getColorFromRes(R.color.light_gray))
                 tvPlayerCoach.setTextColor(root.context.getColorFromRes(R.color.light_gray))
             } else {
@@ -195,17 +202,23 @@ class InviteFragment: Fragment() {
                 tvPlayerCoach.setTextColor(root.context.getColorFromRes(R.color.azure_blue))
             }
 
-            /** no supporters **/
+            /**
+             * If Supporters are not available for the Team (the Supporter limit is 0),
+             * then the Supporter options should be hidden.
+             **/
             if (viewModel.supportersLimit == 0) {
                 tvSupporter.setVisibility(false)
             } else {
-                /** No slots left **/
+                /**
+                 * If Supporters are available but there are no open slots,
+                 * the Supporter option should be disabled
+                 * **/
                 if (viewModel.supporters > 0 && viewModel.supporters == viewModel.supportersLimit) {
                     tvSupporter.isEnabled = false
                     tvSupporter.setTextColor(root.context.getColorFromRes(R.color.light_gray))
                 } else {
                     tvSupporter.setVisibility(true)
-                    tvSupporter.setTextColor(root.context.getColorFromRes(android.R.color.holo_blue_dark))
+                    tvSupporter.setTextColor(root.context.getColorFromRes(R.color.azure_blue))
                 }
             }
         }
@@ -213,8 +226,10 @@ class InviteFragment: Fragment() {
         dialog.show()
     }
 
+
     companion object {
         private val TAG: String = InviteFragment::class.java.simpleName
+        private const val COPY_LABEL = "Splyza_Team_Invite_Link"
         fun newInstance() =  InviteFragment()
     }
 }

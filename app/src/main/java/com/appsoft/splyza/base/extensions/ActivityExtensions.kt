@@ -1,5 +1,7 @@
 package com.appsoft.splyza.base.extensions
 
+import android.content.Context
+import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -25,3 +27,7 @@ fun FragmentActivity.changeFragment(
 
     transaction.commit()
 }
+
+fun Context.showLongToast(str: String) = Toast.makeText(this, str, Toast.LENGTH_LONG).show()
+
+fun Context.showShortToast(str: String) = Toast.makeText(this, str, Toast.LENGTH_SHORT).show()

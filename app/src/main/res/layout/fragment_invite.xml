@@ -103,6 +103,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/font_14"
             android:textStyle="bold"
+            tools:text="51"
             app:layout_constraintBottom_toBottomOf="@id/tvCurrentSupporters"
             app:layout_constraintStart_toEndOf="@id/tvCurrentSupporters"
             app:layout_constraintTop_toTopOf="@id/tvCurrentSupporters" />
@@ -161,13 +162,13 @@
             app:layout_constraintTop_toBottomOf="@+id/tvInvitePermissions">
 
             <TextView
-                android:id="@+id/tvCurrentPermLevel"
+                android:id="@+id/tvCurrentPermission"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
-                tools:text="Coach" />
+                android:text="@string/coach" />
 
             <ImageView
                 android:id="@+id/ivExpandPerms"

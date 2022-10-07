@@ -20,9 +20,6 @@ class HomeViewModel @Inject constructor(
 
     var inviteUrl: String? = ""
     var teamId = ""
-    var isTeamFull = false
-    var supporters = 0
-    var supportersLimit = 0
 
     private val _teamLiveData by lazy {
         MutableLiveData<ResourceState<TeamResponse>>()
