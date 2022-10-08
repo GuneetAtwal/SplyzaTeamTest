@@ -20,8 +20,7 @@ class HomeActivity : AppCompatActivity() {
         changeFragment(
             containerViewId = R.id.fragmentContainer,
             newFragment = HomeFragment.newInstance(),
-            replaceFragment = true,
-            addToBackStack = true
+            replaceFragment = true
         )
     }
 }
